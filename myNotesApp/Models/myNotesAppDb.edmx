@@ -4,46 +4,255 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="myNotesAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Scratchpad">
+    <Schema Namespace="myNotesAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="noteId" Type="int" />
+          <Property Name="creationDate" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="favourites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="noteId" Type="int" />
+        </EntityType>
+        <EntityType Name="notes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content" Type="nvarchar" MaxLength="255" />
+          <Property Name="creationDate" Type="datetime" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="isTrashed" Type="bit" />
+        </EntityType>
+        <EntityType Name="scratchpad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="content" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="trash">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="noteId" Type="int" />
+        </EntityType>
+        <Association Name="FK__category__noteId__48CFD27E">
+          <End Role="notes" Type="Self.notes" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__favourite__noteI__47DBAE45">
+          <End Role="notes" Type="Self.notes" Multiplicity="0..1" />
+          <End Role="favourites" Type="Self.favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="favourites">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__trash__noteId__46E78A0C">
+          <End Role="notes" Type="Self.notes" Multiplicity="0..1" />
+          <End Role="trash" Type="Self.trash" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trash">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="myNotesAppDBModelStoreContainer">
-          <EntitySet Name="Scratchpad" EntityType="Self.Scratchpad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="favourites" EntityType="Self.favourites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notes" EntityType="Self.notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scratchpad" EntityType="Self.scratchpad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="trash" EntityType="Self.trash" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__category__noteId__48CFD27E" Association="Self.FK__category__noteId__48CFD27E">
+            <End Role="notes" EntitySet="notes" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__favourite__noteI__47DBAE45" Association="Self.FK__favourite__noteI__47DBAE45">
+            <End Role="notes" EntitySet="notes" />
+            <End Role="favourites" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__trash__noteId__46E78A0C" Association="Self.FK__trash__noteId__46E78A0C">
+            <End Role="notes" EntitySet="notes" />
+            <End Role="trash" EntitySet="trash" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myNotesAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Scratchpad">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="myNotesAppDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Scratchpads" EntityType="Self.Scratchpad" />
+          <EntitySet Name="categories" EntityType="myNotesAppDBModel.category" />
+          <EntitySet Name="favourites" EntityType="myNotesAppDBModel.favourite" />
+          <EntitySet Name="notes" EntityType="myNotesAppDBModel.note" />
+          <EntitySet Name="trashes" EntityType="myNotesAppDBModel.trash" />
+          <AssociationSet Name="FK__category__noteId__48CFD27E" Association="myNotesAppDBModel.FK__category__noteId__48CFD27E">
+            <End Role="note" EntitySet="notes" />
+            <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__favourite__noteI__47DBAE45" Association="myNotesAppDBModel.FK__favourite__noteI__47DBAE45">
+            <End Role="note" EntitySet="notes" />
+            <End Role="favourite" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__trash__noteId__46E78A0C" Association="myNotesAppDBModel.FK__trash__noteId__46E78A0C">
+            <End Role="note" EntitySet="notes" />
+            <End Role="trash" EntitySet="trashes" />
+          </AssociationSet>
+          <EntitySet Name="scratchpads" EntityType="myNotesAppDBModel.scratchpad" />
         </EntityContainer>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="noteId" Type="Int32" />
+          <Property Name="creationDate" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="note" Relationship="myNotesAppDBModel.FK__category__noteId__48CFD27E" FromRole="category" ToRole="note" />
+        </EntityType>
+        <EntityType Name="favourite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="noteId" Type="Int32" />
+          <NavigationProperty Name="note" Relationship="myNotesAppDBModel.FK__favourite__noteI__47DBAE45" FromRole="favourite" ToRole="note" />
+        </EntityType>
+        <EntityType Name="note">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="creationDate" Type="DateTime" Precision="3" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="isTrashed" Type="Boolean" />
+          <NavigationProperty Name="categories" Relationship="myNotesAppDBModel.FK__category__noteId__48CFD27E" FromRole="note" ToRole="category" />
+          <NavigationProperty Name="favourites" Relationship="myNotesAppDBModel.FK__favourite__noteI__47DBAE45" FromRole="note" ToRole="favourite" />
+          <NavigationProperty Name="trashes" Relationship="myNotesAppDBModel.FK__trash__noteId__46E78A0C" FromRole="note" ToRole="trash" />
+        </EntityType>
+        <EntityType Name="trash">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="noteId" Type="Int32" />
+          <NavigationProperty Name="note" Relationship="myNotesAppDBModel.FK__trash__noteId__46E78A0C" FromRole="trash" ToRole="note" />
+        </EntityType>
+        <Association Name="FK__category__noteId__48CFD27E">
+          <End Type="myNotesAppDBModel.note" Role="note" Multiplicity="0..1" />
+          <End Type="myNotesAppDBModel.category" Role="category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="note">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__favourite__noteI__47DBAE45">
+          <End Type="myNotesAppDBModel.note" Role="note" Multiplicity="0..1" />
+          <End Type="myNotesAppDBModel.favourite" Role="favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="note">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__trash__noteId__46E78A0C">
+          <End Type="myNotesAppDBModel.note" Role="note" Multiplicity="0..1" />
+          <End Type="myNotesAppDBModel.trash" Role="trash" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="note">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trash">
+              <PropertyRef Name="noteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="scratchpad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="myNotesAppDBModelStoreContainer" CdmEntityContainer="myNotesAppDBEntities">
-          <EntitySetMapping Name="Scratchpads">
-            <EntityTypeMapping TypeName="myNotesAppDBModel.Scratchpad">
-              <MappingFragment StoreEntitySet="Scratchpad">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
+        <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="myNotesAppDBModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="noteId" ColumnName="noteId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="favourites">
+            <EntityTypeMapping TypeName="myNotesAppDBModel.favourite">
+              <MappingFragment StoreEntitySet="favourites">
+                <ScalarProperty Name="noteId" ColumnName="noteId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notes">
+            <EntityTypeMapping TypeName="myNotesAppDBModel.note">
+              <MappingFragment StoreEntitySet="notes">
+                <ScalarProperty Name="isTrashed" ColumnName="isTrashed" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="trashes">
+            <EntityTypeMapping TypeName="myNotesAppDBModel.trash">
+              <MappingFragment StoreEntitySet="trash">
+                <ScalarProperty Name="noteId" ColumnName="noteId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scratchpads">
+            <EntityTypeMapping TypeName="myNotesAppDBModel.scratchpad">
+              <MappingFragment StoreEntitySet="scratchpad">
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

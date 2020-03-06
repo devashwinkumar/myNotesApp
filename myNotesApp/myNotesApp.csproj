@@ -177,6 +177,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\category.cs">
+      <DependentUpon>myNotesAppDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\favourite.cs">
+      <DependentUpon>myNotesAppDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\myNotesAppDb.Context.cs">
@@ -194,7 +200,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>myNotesAppDb.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Scratchpad.cs">
+    <Compile Include="Models\note.cs">
+      <DependentUpon>myNotesAppDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\scratchpad.cs">
+      <DependentUpon>myNotesAppDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\trash.cs">
       <DependentUpon>myNotesAppDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,9 +12,13 @@ namespace myNotesApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class scratchpad
+    public partial class category
     {
         public int id { get; set; }
-        public string content { get; set; }
+        public string name { get; set; }
+        public Nullable<int> noteId { get; set; }
+        public byte[] creationDate { get; set; }
+    
+        public virtual note note { get; set; }
     }
 }

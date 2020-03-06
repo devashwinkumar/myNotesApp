@@ -5,7 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="53b8bdba459c438faefadba111dadb34" Name="Diagram1">
-        <EntityTypeShape EntityType="myNotesAppDBModel.Scratchpad" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myNotesAppDBModel.category" Width="1.5" PointX="5.625" PointY="1.125" />
+        <EntityTypeShape EntityType="myNotesAppDBModel.favourite" Width="1.5" PointX="5.625" PointY="6.25" />
+        <EntityTypeShape EntityType="myNotesAppDBModel.note" Width="1.5" PointX="3.375" PointY="3.25" />
+        <EntityTypeShape EntityType="myNotesAppDBModel.trash" Width="1.5" PointX="5.625" PointY="3.875" />
+        <AssociationConnector Association="myNotesAppDBModel.FK__category__noteId__48CFD27E" />
+        <AssociationConnector Association="myNotesAppDBModel.FK__favourite__noteI__47DBAE45" />
+        <AssociationConnector Association="myNotesAppDBModel.FK__trash__noteId__46E78A0C" />
+        <EntityTypeShape EntityType="myNotesAppDBModel.scratchpad" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

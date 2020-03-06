@@ -12,9 +12,11 @@ namespace myNotesApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class scratchpad
+    public partial class trash
     {
         public int id { get; set; }
-        public string content { get; set; }
+        public Nullable<int> noteId { get; set; }
+    
+        public virtual note note { get; set; }
     }
 }

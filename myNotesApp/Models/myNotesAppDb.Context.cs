@@ -25,6 +25,10 @@ namespace myNotesApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Scratchpad> Scratchpads { get; set; }
+        public virtual DbSet<category> categories { get; set; }
+        public virtual DbSet<favourite> favourites { get; set; }
+        public virtual DbSet<note> notes { get; set; }
+        public virtual DbSet<trash> trashes { get; set; }
+        public virtual DbSet<scratchpad> scratchpads { get; set; }
     }
 }

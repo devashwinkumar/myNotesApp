@@ -26,7 +26,7 @@ namespace myNotesApp.Controllers
         public ActionResult Index()
         {
 
-            var scratchNotes = _context.Scratchpads.SingleOrDefault(c => c.Id == 1);
+            var scratchNotes = _context.scratchpads.SingleOrDefault(c => c.id == 1);
             
             return View(scratchNotes);
         }
