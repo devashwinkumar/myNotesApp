@@ -8,6 +8,9 @@
 
 @using (Html.BeginForm("save", "scratchpad"))
 {
-    <input type="submit" class="btn btn-primary save-note" />
+    
+
+
+    <button type="submit" class="btn btn-primary save-note"><span class="glyphicon glyphicon-floppy-disk"></span></button>
     <textarea class="note-text-area" name="content">@Model.content</textarea>
 }

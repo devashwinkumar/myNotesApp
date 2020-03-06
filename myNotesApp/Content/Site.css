@@ -40,7 +40,7 @@ textarea {
 }
 .note-editor {
     float: left;
-    width:60%;
+    /*width:60%;*/
 }
 .main-category-wrapper a {
     display: block;
@@ -62,4 +62,11 @@ textarea {
 .save-note {
     margin-top: 5px;
     float: right;
+}
+.main-category-wrapper > div:hover {
+    background: #2d2d2d;
+}
+.main-category-wrapper div a {
+    text-decoration: none;
+    padding: 10px;
 }
