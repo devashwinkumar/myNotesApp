@@ -1,0 +1,34 @@
+﻿using myNotesApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace myNotesApp.Controllers
+{
+    public class ScratchPadController : Controller
+    {
+
+        private myNotesAppDBEntities _context;
+
+        public ScratchPadController()
+        {
+            _context = new myNotesAppDBEntities();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+
+        // GET: ScratchPad
+        public ActionResult Index()
+        {
+
+            var scratchNotes = _context.Scratchpads.SingleOrDefault(c => c.Id == 1);
+            
+            return View(scratchNotes);
+        }
+    }
+}
