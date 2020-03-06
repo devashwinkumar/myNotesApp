@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2></h2>
-<textarea class="note-text-area">@Model.content</textarea>
 
+@using (Html.BeginForm("save", "scratchpad"))
+{
+    <input type="submit" class="btn btn-primary save-note" />
+    <textarea class="note-text-area" name="content">@Model.content</textarea>
+}

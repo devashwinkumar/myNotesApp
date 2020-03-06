@@ -30,5 +30,19 @@ namespace myNotesApp.Controllers
             
             return View(scratchNotes);
         }
+
+        public ActionResult Save(String content)
+        {
+            var scratchpadDB = _context.scratchpads.SingleOrDefault(c => c.id == 1);
+
+            scratchpadDB.content = content;
+            
+            
+            
+            
+            _context.SaveChanges();
+          //  _context.scratchpads.Add;
+            return RedirectToAction("Index","ScratchPad");
+        }
     }
 }
